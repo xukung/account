@@ -1,0 +1,10 @@
+/node_modules/
+/.idea/
+npm-debug.log
+config.json
+
+
+
+
+#for macOS
+*.DS_Store
