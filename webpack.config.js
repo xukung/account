@@ -12,10 +12,10 @@ var path = require('path');
 
 module.exports = {
     entry: {
-        app: ['./public/src/js/app.js'],
+        app: ['./public/src/app.js'],
     },
     output: {
-        path: path.join(__dirname, 'public/dist/js/'),
+        path: path.join(__dirname, 'public/js/'),
         filename: '[name].js'
     },
     resolve: {

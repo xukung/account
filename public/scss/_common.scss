@@ -1,0 +1,135 @@
+/*common*/
+body {
+    font-family: $font_family;
+    font-size: $font_size;
+    line-height: $line_height;
+    background-color: $background_color;
+    color: $font_color;
+    min-width: $device_min_width;
+    overflow: hidden;
+}
+
+a {
+    color: $link_color;
+    text-decoration: none;
+    -webkit-tap-highlight-color: $tap_highlight_color;
+    &:hover {
+        color: $link_hover_color;
+    }
+}
+
+.wrap {
+    max-width: $device_max_width;
+    margin: 0 auto;
+}
+
+.pad {
+    padding: 0.5rem;
+}
+
+.summary {
+    color: #999;
+    font-size: 0.7rem;
+}
+
+//生成类似 .mt-10{margin-top:10px;}
+@for $i from 1 through 6 {
+    .mt-#{$i*5} {
+        margin-top: 5px*$i;
+    }
+}
+
+.fleft {
+    float: left;
+}
+.top-btn-item{
+    height: 34px;
+    padding-right: 16px;
+    margin-right: 10px;
+    border-right: 1px solid #ccc;;
+}
+.fright {
+    float: right;
+}
+
+.tleft {
+    text-align: left;
+}
+
+.tcenter {
+    text-align: center;
+}
+
+.tright {
+    text-align: right;
+}
+
+.clear {
+    clear: both;
+}
+
+.clearfix {
+    zoom: 1;
+    &:after {
+        content: "";
+        display: block;
+        height: 0;
+        font-size: 0;
+        clear: both;
+        visibility: hidden;
+    }
+}
+
+.omit {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.hidden {
+    display: none;
+}
+
+.oneline {
+    width: 100%;
+    height: 1.5em;
+    line-height: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.twoline {
+    width: 100%;
+    height: 2.7em;
+    line-height: 1.4em;
+    overflow: hidden;
+}
+
+.hr {
+    border-top: 1px solid #ddd;
+    margin: 0.5em 0;
+}
+
+.hr2 {
+    border-top: 1px dashed #ddd;
+    margin: 0.5em 0;
+}
+
+.relative {
+    position: relative;
+}
+
+img.fw {
+    width: 100%;
+}
+
+img.photo {
+    border: 1px solid #ddd;
+}
+
+.middle-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,29 @@
+/* color*/
+
+@mixin font-color($name,$color) {
+    .#{$name},
+    .#{$name} a,
+    a.#{$name}:link,
+    a.#{$name}:visited {
+        color: $color;
+    }
+}
+
+@include font-color("black", #000000);
+@include font-color("white", #ffffff);
+@include font-color("gray", #888888);
+@include font-color("silver", #cccccc);
+@include font-color("red", #cc0000);
+@include font-color("maroon", #880000);
+@include font-color("lime", #00ff00);
+@include font-color("green", #008800);
+@include font-color("blue", #0000ff);
+@include font-color("navy", #000088);
+@include font-color("yellow", #ffff00);
+@include font-color("olive", #888800);
+@include font-color("teal", #008888);
+@include font-color("fuchsia", #ff00ff);
+@include font-color("purple", #880088);
+@include font-color("orange", #ff9900);
+@include font-color("cyan", #04bee6);
+@include font-color("magenta", #f3048b);

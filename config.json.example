@@ -1,8 +1,14 @@
 {
   "web": {
-    "port": "3001",
+    "port": "3002",
     "domain": "http://localhost",
     "cookieMaxAge": 36000000
+  },
+  "mysql": {
+    "host": "localhost",
+    "user": "root",
+    "password": "123456",
+    "database": "account"
   },
   "request": {
     "limit": 60,

@@ -1,0 +1,59 @@
+/*seldom*/
+fieldset {
+    border: 1px solid #ddd;
+    padding: 0 1em 1em 1em;
+    margin-bottom: 1em;
+    clear: both;
+}
+
+legend {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+table.data {
+    margin-top: 5px;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    tr.on {
+        background: #f2f2f2;
+    }
+    td, th {
+        padding: 15px 7px;
+        border-bottom: 1px solid #eee;
+    }
+    th {
+        background: #fff;
+        color: $table-th-color !important;
+        border-bottom: 1px solid #f3f3f3;
+        text-align: left;
+        font-weight: bold;
+    }
+    td[align="left"], th[align="left"] {
+        text-align: left;
+    }
+    td[align="right"], th[align="right"] {
+        text-align: right;
+    }
+
+}
+
+.page {
+    text-align: center;
+    margin: 1em 0;
+    a {
+        display: inline-block;
+        height: 1.5em;
+        line-height: 1.5em;
+        padding: 0 0.5em;
+        border: 1px solid #ddd;
+        margin: 0 0.3em;
+    }
+    span {
+        margin: 0 0.3em;
+    }
+}
+

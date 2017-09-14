@@ -1,0 +1,335 @@
+/*module*/
+
+//导航
+.nav-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: $nav_bar_width;
+    overflow-y: auto;
+    background: $nav_bar_bg_color;
+    box-shadow: $shadow1;
+    color: #ddd;
+    &::-webkit-scrollbar {
+        width: 4px;
+        background-color: $nav_bar_bg_color;
+    }
+    &::-webkit-scrollbar-track {
+        width: 4px;
+        background-color: $nav_bar_bg_color;
+    }
+    &::-webkit-scrollbar-thumb {
+        width: 4px;
+        border-radius: 2px;
+        background-color: rgba(255, 255, 255, .3);
+    }
+}
+
+.logo-bar {
+    height: $top_bar_height;
+    border-bottom: 1px solid #222;
+    img.logo {
+        float: left;
+        margin-top: 25px;
+        margin-left: 20px;
+        height: 25px;
+    }
+    .user-menu {
+        float: right;
+        font-size: 10px;
+        color: #eee;
+        margin-top: 10px;
+
+        button{
+            position: relative;
+            width: 34px!important;
+            left: -12px;
+            top: 4px;
+        }
+    }
+}
+
+//top
+.top-bar {
+    position: absolute;
+    z-index: 99;
+    left: $nav_bar_width;
+    top: 0;
+    right: 0;
+    height: $top_bar_height;
+    line-height: $top_bar_height;
+    min-width: calc(#{$device_min_width} - #{$nav_bar_width});
+    overflow: hidden;
+    border-bottom: 1px solid #ddd;
+    padding-left: 45px;
+    background: #f9f8f8;
+    .split-item {
+        display: inline-block;
+        height: 34px;
+        border-left: 1px solid #ccc;
+        margin: 0 20px 0 10px;
+    }
+    .title {
+        float: left;
+        font-size: 18px;
+    }
+}
+
+
+//main
+.main-body {
+    position: absolute;
+    left: $nav_bar_width;
+    top: $top_bar_height;
+    right: 0;
+    bottom: 0;
+    min-width: calc(#{$device_min_width} - #{$nav_bar_width});
+    padding: 20px 50px 30px 30px;
+    overflow: auto;
+    min-width: 1080px;
+}
+
+.nobar-main-body {
+    top: 0px;
+}
+
+//side
+.side-bar {
+    //width: 100%;
+    overflow: hidden;
+    background: #f9f9f9;
+    .side-head {
+        position: relative;
+        height: $side_bar_head_height;
+        background: $highlight_color;
+        color: #fff;
+        .side-title {
+            position: absolute;
+            left: 70px;
+            top: 0;
+            line-height: $side_bar_head_height;
+            font-size: 18px;
+        }
+        .mid-area {
+            padding: 20px 70px 0;
+            .return-back {
+                margin-bottom: 20px;
+                cursor: pointer;
+                span {
+                    margin-right: 3px;
+                    transform: rotate(90deg);
+                    -ms-transform: rotate(90deg);
+                    -moz-transform: rotate(90deg);
+                    -webkit-transform: rotate(90deg);
+                    -o-transform: rotate(90deg);
+                    float: left;
+                    font-size: 17px;
+                    margin-top: 2px;
+                }
+            }
+        }
+        .photo {
+            position: absolute;
+            left: 50px;
+            top: 50px;
+            width: 60px;
+            height: 60px;
+            border-radius: 100%;
+            overflow: hidden;
+            box-shadow: $shadow1;
+            img {
+                width: 100%;
+            }
+        }
+        .name {
+            position: absolute;
+            left: 125px;
+            top: 70px;
+            font-size: 18px;
+            color: #fff;
+        }
+        .operation {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            text-align: right;
+            span {
+                margin-right: 20px;
+                color: #fff;
+                font-size: 20px;
+                cursor: pointer;
+                .icon-lock-return {
+                    font-size: 22px;
+                }
+            }
+        }
+    }
+    .side-body {
+        position: absolute;
+        top: $side_bar_head_height;
+        left: 0;
+        right: 0;
+        bottom: $side_bar_foot_height;
+        overflow-x: hidden;
+        overflow-y: auto;
+        &[class *="notEdit"] {
+            bottom: 0;
+        }
+        .btn-add {
+            position: absolute;
+            top: 25px;
+            left: 40px;
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            line-height: 24px;
+            font-size: 15px;
+            text-align: center;
+            border-radius: 100%;
+            background: #eee;
+            color: #999;
+            cursor: pointer;
+        }
+        .btn-remove {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            line-height: 16px;
+            text-align: center;
+            border-radius: 100%;
+            background: #f00;
+            color: #fff;
+            cursor: pointer;
+        }
+        .btn-edit {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            padding: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            &[class*='editable'] {
+                border: 1px solid #ddd;
+                box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 0.1);
+            }
+            .icon-edit {
+                font-size: 20px;
+                color: $highlight_color;
+            }
+        }
+        .form-area {
+            padding: 55px 30px 10px;
+            &[class*="form-area2"] {
+                padding: 10px 0 10px 60px;
+            }
+            .form-row {
+                margin: 3px 0;
+                label[class*="require"] {
+                    &::after {
+                        position: absolute;
+                        top: 8px;
+                        right: -7px;
+                        content: "*";
+                        color: red;
+                    }
+                }
+                .left-area {
+                    position: relative;
+                    vertical-align: top;
+                    display: inline-block;
+                    width: 85px;
+                    text-align: right;
+                    margin-right: 26px;
+                    padding-top: 14px;
+                }
+                .right-area {
+                    vertical-align: top;
+                    display: inline-block;
+                    width: 320px;
+                    div, input {
+                        font-size: 12px !important; //重定义表单右侧组件字体大小
+                    }
+                    //放在右侧的checkbox,向前挪到左侧,不能直接放在左侧,左侧属性text-align:right会构成影响
+                    .check-left {
+                        position: relative;
+                        left: -40px;
+                        margin: 10px 0;
+                    }
+                    //姓名label
+                    .label-name {
+                        position: relative;
+                        top: 12px;
+                        margin: 0 22px;
+                        &[class*="require"]::after { //名字后面的星号
+                            top: -8px;
+                        }
+
+                    }
+                    //固定电话分割线
+                    .mid-line {
+                        position: relative;
+                        top: 23px;
+                        border-top: 1px solid #ddd;
+                        margin: 0 3px;
+                        width: 12px;
+                    }
+                    //分割高度,保持对齐
+                    .fg {
+                        height: 8px;
+                        border: 0;
+                    }
+                    //单用户信息的label
+                    .info-label {
+                        height: 48px;
+                        line-height: 48px;
+                        color: #888;
+                    }
+                    //固定电话格式错误文字提示
+                    .telephoneErrorText {
+                        color: #f00;
+                    }
+                    //checkbox右侧文字
+                    .checkbox-label {
+                        position: relative;
+                        left: -10px;
+                        top: 1px;
+                    }
+                    //checkbox对齐
+                    .checkbox-pad {
+                        padding-top: 12px;
+                        span {
+                            margin-top: 2px;
+                            display: block;
+                            color: rgba(0, 0, 0, 0.298039);
+                        }
+                    }
+                }
+            }
+            //组成员头像
+            .member-photo {
+                width: 30px;
+                height: 30px;
+                border-radius: 100%;
+                border: 1px solid #eee;
+            }
+        }
+    }
+    .side-foot {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: $side_bar_width;
+        height: $side_bar_foot_height;
+        line-height: $side_bar_foot_height;
+        padding: 0 2em;
+        border-top: 1px solid $border-color;
+        text-align: right;
+        a {
+            margin: 0 2em;
+        }
+    }
+}

@@ -1,0 +1,45 @@
+//定义屏幕最大宽度
+$device_max_width: 100%;
+$device_min_width: 1280px;
+
+//body的背景颜色
+$background_color: #fff;
+
+//全局字体
+$font_family: "PingFangSC-Regular", "Microsoft YaHei", STHeiti, Helvetica, Arial, sans-serif;
+$font_size: 12px;
+
+//全局字体颜色
+$font_color: #444;
+
+//全局链接颜色
+$link_color: #222;
+$link_hover_color: #04bee6;
+
+//全局手指点击后高亮颜色
+$tap_highlight_color: rgba(9, 174, 255, 0.5);
+
+//全局行高
+$line_height: 1.8em;
+
+//布局
+$nav_bar_width: 200px;
+$top_bar_height: 70px;
+$side_bar_width: 560px;
+$side_bar_head_height: 160px;
+$side_bar_foot_height: 80px;
+
+//常用颜色
+$highlight_color: #38f; //menu,addBar,sideBar 亮蓝色
+$nav_bar_bg_color: #363737;
+$menu_bar_hover_background_color: #4d4d4d;
+$color_info: #428bca;
+$color_success: #5cb85c;
+$color_warning: #f90;
+$color_danger: #e33;
+$border-color: #ddd;
+$table-th-color:#9b9b9b;//表格头字体颜色
+
+//阴影
+$shadow1: 0 0 4px 2px rgba(0, 0, 0, 0.2);
+

@@ -1,0 +1,83 @@
+/*font*/
+
+//3D文本
+@mixin text3d($color) {
+    color: $color;
+    text-shadow: 1px 1px 0px darken($color, 5%),
+    2px 2px 0px darken($color, 10%),
+    3px 3px 0px darken($color, 15%),
+    4px 4px 0px darken($color, 20%),
+    4px 4px 2px #000;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.f0 {
+    font-size: 0;
+}
+
+.f10 {
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.f10b {
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.f12 {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.f12b {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.f14 {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.f14b {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.f16 {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.f16b {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.f18 {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.f18b {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.f26 {
+    font-size: 26px;
+    font-weight: normal;
+}
+
+.f26b {
+    font-size: 26px;
+    font-weight: bold;
+}
