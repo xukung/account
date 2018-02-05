@@ -12,10 +12,10 @@ var path = require('path');
 
 module.exports = {
     entry: {
-        app: ['./public/src/app.js'],
+        app: ['./public/src/js/app.js'],
     },
     output: {
-        path: path.join(__dirname, 'public/js/'),
+        path: path.join(__dirname, 'public/dist/js/'),
         filename: '[name].js'
     },
     resolve: {
@@ -27,7 +27,7 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'babel',
                 query: {
-                    presets: ['es2015', 'stage-0', 'react']
+                    presets: ['react', 'es2015', 'stage-0']
                 },
                 exclude: /node_modules/
             },
