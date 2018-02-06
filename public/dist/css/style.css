@@ -237,5 +237,23 @@ table.data td[align="right"], table.data th[align="right"] { text-align: right; 
 .page span { margin: 0 0.3em; }
 
 /*通用组件样式*/
+/*通用组件样式*/
+.nav > li > a { padding: 15px 5px !important; }
+
+.row { background: #fff; }
+
+.mt { margin-top: 10px; }
+
+.note-area { margin-top: 1.5em; border-top: 1px solid #ddd; padding: 1.5em 0; }
+.note-area ul { padding-left: 2em; }
+.note-area ul li { list-style: disc; }
+
+.breadcrumb { background: rgba(255, 255, 255, 0); }
+
+.add-new { position: fixed; left: 50px; top: 70px; cursor: pointer; font-size: 20px; }
+
+pre { padding: 20px; }
+
+.navbar { border-radius: 0 !important; }
 
 /*# sourceMappingURL=style.css.map */

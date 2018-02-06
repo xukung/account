@@ -8,7 +8,10 @@ var expressSession = require('express-session');
 var compression = require('compression');
 
 var routes = require('./routes/index');
-var json = require('./routes/json');
+var article = require('./routes/article');
+var sort = require('./routes/sort');
+var jsons = require('./routes/jsons');
+var other = require('./routes/other');
 
 var app = express();
 
@@ -32,7 +35,10 @@ app.use(expressSession({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/json', json);
+app.use('/article', article);
+app.use('/sort', sort);
+app.use('/json', jsons);
+app.use('/', other);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

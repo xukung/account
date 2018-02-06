@@ -1,7 +1,9 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+
 import * as actions from '../actions/index';
+
 
 class Base extends React.Component {
     constructor(props) {
