@@ -10,7 +10,8 @@ export default class SortList extends React.Component {
         super(props);
 
         this.state = {
-            sorts: [],
+            sortsin: [],
+            sortsout: [],
         };
     }
 
@@ -25,7 +26,8 @@ export default class SortList extends React.Component {
 
     init() {
         this.setState({
-            sorts: [],
+            sortsin: [],
+            sortsout: [],
         });
 
         this.getSorts();
@@ -36,15 +38,23 @@ export default class SortList extends React.Component {
     }
 
     async getSorts() {
-        return;
         try {
             let msg = await fetchJson({
                 type: 'GET',
-                url: `/json/sort/list`,
+                url: `/json/sortin/list`,
+            });
+
+            let msg2 = await fetchJson({
+                type: 'GET',
+                url: `/json/sortout/list`,
             });
 
             this.setState({
-                sorts: msg.data,
+                sortsin: msg.data,
+            });
+
+            this.setState({
+                sortsout: msg2.data,
             });
 
         } catch (e) {
@@ -53,7 +63,11 @@ export default class SortList extends React.Component {
     }
 
     addNew() {
-        browserHistory.push(`/sort/add`);
+        browserHistory.push(`/sortin/add`);
+    }
+
+    removeNew() {
+        browserHistory.push(`/sortout/add`);
     }
 
     editSort(e) {
@@ -96,12 +110,11 @@ export default class SortList extends React.Component {
     }
 
     render() {
-        let sortsArray = this.state.sorts.map((value, index)=> {
+        let sortsInArray = this.state.sortsin.map((value, index)=> {
             return (
                 <tr key={index} data-id={value.id} data-title={value.cname} onDoubleClick={this.editSort.bind(this)}>
                     <td>{value.id}</td>
-                    <td>{value.orderid}</td>
-                    <td>{value.cname}</td>
+                    <td>{value.name}</td>
                     <td>
                         <button type="button" className="btn btn-xs btn-danger" onClick={this.delSort.bind(this)}>
                             删除
@@ -115,21 +128,23 @@ export default class SortList extends React.Component {
             <div className="container">
                 <div className="row">
                     <div className="col-xs-12">
-                        <div className="glyphicon glyphicon-plus add-new" onClick={this.addNew.bind(this)}></div>
+                        <div className="glyphicon glyphicon-plus-sign add-new" onClick={this.addNew.bind(this)}></div>
+                        <div className="glyphicon glyphicon-minus-sign remove-new"
+                             onClick={this.removeNew.bind(this)}></div>
+                        <div>inlist</div>
                         <table className="data" width="100%">
                             <thead>
                             <tr>
                                 <th>id</th>
-                                <th>排序</th>
-                                <th>标题</th>
+                                <th>名称</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {sortsArray}
+                            {sortsInArray}
                             </tbody>
                         </table>
-                        <div id="pages" className="page"></div>
+                        <div>outlist</div>
                     </div>
                 </div>
             </div>

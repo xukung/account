@@ -11,11 +11,44 @@ var moment = require('moment');
 
 
 //分类列表
-router.get('/sort/list', function (req, res, next) {
+router.get('/sortin/list', function (req, res, next) {
     pool.getConnection(function (err, connection) {
         if (err) throw err;
 
         let sqlStr = `SELECT * FROM sort_in ORDER BY id ASC`;
+
+        // console.log('sqlStr:', sqlStr);
+
+        connection.query(sqlStr, function (err, rows) {
+            if (err) throw err;
+
+            if (rows.length > 0) {
+                //success
+                // console.log(rows);
+
+                let obj = {
+                    status: 'success',
+                    data: rows
+                };
+
+                res.json(obj);
+            } else {
+                let obj = {
+                    status: 'success',
+                    data: []
+                };
+                res.json(obj);
+            }
+            connection.release();
+        });
+    });
+});
+
+router.get('/sortout/list', function (req, res, next) {
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+
+        let sqlStr = `SELECT * FROM sort_out ORDER BY id ASC`;
 
         // console.log('sqlStr:', sqlStr);
 
@@ -80,17 +113,16 @@ router.get('/sort/detail', function (req, res, next) {
     });
 });
 
-router.post('/sort/add', function (req, res, next) {
-    let cname = req.body.cname;
+router.post('/sortin/add', function (req, res, next) {
+    let name = req.body.name;
 
     pool.getConnection(function (err, connection) {
         if (err) throw err;
         let sqlObj = {
-            cname: cname,
-            orderid: 100,
+            name: name,
         };
 
-        connection.query(`INSERT INTO sort SET ?`, sqlObj, function (err, results, fields) {
+        connection.query(`INSERT INTO sort_in SET ?`, sqlObj, function (err, results, fields) {
             if (err) throw err;
             let obj = {
                 status: 'success',
@@ -104,16 +136,37 @@ router.post('/sort/add', function (req, res, next) {
     });
 });
 
-router.post('/sort/edit', function (req, res, next) {
-    let id = req.body.id;
-    let orderid = parseInt(req.body.orderid, 10);
-    let cname = req.body.cname;
+router.post('/sortout/add', function (req, res, next) {
+    let name = req.body.name;
 
     pool.getConnection(function (err, connection) {
         if (err) throw err;
         let sqlObj = {
-            orderid: orderid,
-            cname: cname,
+            name: name,
+        };
+
+        connection.query(`INSERT INTO sort_out SET ?`, sqlObj, function (err, results, fields) {
+            if (err) throw err;
+            let obj = {
+                status: 'success',
+                data: {}
+            };
+
+            res.json(obj);
+            connection.release();
+        });
+
+    });
+});
+
+router.post('/sortin/edit', function (req, res, next) {
+    let id = req.body.id;
+    let name = req.body.name;
+
+    pool.getConnection(function (err, connection) {
+        if (err) throw err;
+        let sqlObj = {
+            name: name,
         };
         connection.query(`UPDATE sort SET ? WHERE id="${id}"`, sqlObj, function (err, rows) {
             if (err) throw err;

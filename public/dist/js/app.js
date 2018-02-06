@@ -81,10 +81,6 @@
 
 	var _ArticleLayout2 = _interopRequireDefault(_ArticleLayout);
 
-	var _SortLayout = __webpack_require__(942);
-
-	var _SortLayout2 = _interopRequireDefault(_SortLayout);
-
 	var _ArticleDetail = __webpack_require__(944);
 
 	var _ArticleDetail2 = _interopRequireDefault(_ArticleDetail);
@@ -93,17 +89,29 @@
 
 	var _ArticleAdd2 = _interopRequireDefault(_ArticleAdd);
 
-	var _SortAdd = __webpack_require__(947);
-
-	var _SortAdd2 = _interopRequireDefault(_SortAdd);
-
 	var _ArticleEdit = __webpack_require__(948);
 
 	var _ArticleEdit2 = _interopRequireDefault(_ArticleEdit);
 
-	var _SortEdit = __webpack_require__(949);
+	var _SortLayout = __webpack_require__(942);
 
-	var _SortEdit2 = _interopRequireDefault(_SortEdit);
+	var _SortLayout2 = _interopRequireDefault(_SortLayout);
+
+	var _SortInAdd = __webpack_require__(950);
+
+	var _SortInAdd2 = _interopRequireDefault(_SortInAdd);
+
+	var _SortOutAdd = __webpack_require__(952);
+
+	var _SortOutAdd2 = _interopRequireDefault(_SortOutAdd);
+
+	var _SortInEdit = __webpack_require__(951);
+
+	var _SortInEdit2 = _interopRequireDefault(_SortInEdit);
+
+	var _SortOutEdit = __webpack_require__(953);
+
+	var _SortOutEdit2 = _interopRequireDefault(_SortOutEdit);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -122,8 +130,10 @@
 	            _react2.default.createElement(_reactRouter.Route, { path: '/article/add', component: _ArticleAdd2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/article/edit', component: _ArticleEdit2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/sort/list', component: _SortLayout2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/sort/add', component: _SortAdd2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/sort/edit', component: _SortEdit2.default })
+	            _react2.default.createElement(_reactRouter.Route, { path: '/sortin/add', component: _SortInAdd2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/sortin/edit', component: _SortInEdit2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/sortout/add', component: _SortOutAdd2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/sortout/edit', component: _SortOutEdit2.default })
 	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/*', component: _ErrorPage2.default })
 	    )
@@ -44794,10 +44804,8 @@
 	var customEvent = new EventEmitter();
 
 	exports.customEvent = customEvent;
-
-	//string
-
-	var SHOW_ADD_PROJECT = exports.SHOW_ADD_PROJECT = 'SHOW_ADD_PROJECT';
+	var REFRESH_ARTICLE_LIST = exports.REFRESH_ARTICLE_LIST = 'REFRESH_ARTICLE_LIST';
+	var REFRESH_SORTS_LIST = exports.REFRESH_SORTS_LIST = 'REFRESH_SORTS_LIST';
 
 /***/ }),
 /* 612 */
@@ -54735,7 +54743,8 @@
 	        var _this = _possibleConstructorReturn(this, (SortList.__proto__ || Object.getPrototypeOf(SortList)).call(this, props));
 
 	        _this.state = {
-	            sorts: []
+	            sortsin: [],
+	            sortsout: []
 	        };
 	        return _this;
 	    }
@@ -54753,7 +54762,8 @@
 	        key: 'init',
 	        value: function init() {
 	            this.setState({
-	                sorts: []
+	                sortsin: [],
+	                sortsout: []
 	            });
 
 	            this.getSorts();
@@ -54767,34 +54777,51 @@
 	        key: 'getSorts',
 	        value: function () {
 	            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-	                var msg;
+	                var msg, msg2;
 	                return regeneratorRuntime.wrap(function _callee$(_context) {
 	                    while (1) {
 	                        switch (_context.prev = _context.next) {
 	                            case 0:
-	                                return _context.abrupt('return');
+	                                _context.prev = 0;
+	                                _context.next = 3;
+	                                return (0, _fetchJson2.default)({
+	                                    type: 'GET',
+	                                    url: '/json/sortin/list'
+	                                });
 
-	                            case 4:
+	                            case 3:
 	                                msg = _context.sent;
+	                                _context.next = 6;
+	                                return (0, _fetchJson2.default)({
+	                                    type: 'GET',
+	                                    url: '/json/sortout/list'
+	                                });
+
+	                            case 6:
+	                                msg2 = _context.sent;
 
 
 	                                this.setState({
-	                                    sorts: msg.data
+	                                    sortsin: msg.data
 	                                });
 
-	                                _context.next = 10;
+	                                this.setState({
+	                                    sortsout: msg2.data
+	                                });
+
+	                                _context.next = 13;
 	                                break;
 
-	                            case 8:
-	                                _context.prev = 8;
-	                                _context.t0 = _context['catch'](1);
+	                            case 11:
+	                                _context.prev = 11;
+	                                _context.t0 = _context['catch'](0);
 
-	                            case 10:
+	                            case 13:
 	                            case 'end':
 	                                return _context.stop();
 	                        }
 	                    }
-	                }, _callee, this, [[1, 8]]);
+	                }, _callee, this, [[0, 11]]);
 	            }));
 
 	            function getSorts() {
@@ -54806,7 +54833,12 @@
 	    }, {
 	        key: 'addNew',
 	        value: function addNew() {
-	            _reactRouter.browserHistory.push('/sort/add');
+	            _reactRouter.browserHistory.push('/sortin/add');
+	        }
+	    }, {
+	        key: 'removeNew',
+	        value: function removeNew() {
+	            _reactRouter.browserHistory.push('/sortout/add');
 	        }
 	    }, {
 	        key: 'editSort',
@@ -54883,7 +54915,7 @@
 	        value: function render() {
 	            var _this2 = this;
 
-	            var sortsArray = this.state.sorts.map(function (value, index) {
+	            var sortsInArray = this.state.sortsin.map(function (value, index) {
 	                return _react2.default.createElement(
 	                    'tr',
 	                    { key: index, 'data-id': value.id, 'data-title': value.cname, onDoubleClick: _this2.editSort.bind(_this2) },
@@ -54895,12 +54927,7 @@
 	                    _react2.default.createElement(
 	                        'td',
 	                        null,
-	                        value.orderid
-	                    ),
-	                    _react2.default.createElement(
-	                        'td',
-	                        null,
-	                        value.cname
+	                        value.name
 	                    ),
 	                    _react2.default.createElement(
 	                        'td',
@@ -54923,7 +54950,14 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'col-xs-12' },
-	                        _react2.default.createElement('div', { className: 'glyphicon glyphicon-plus add-new', onClick: this.addNew.bind(this) }),
+	                        _react2.default.createElement('div', { className: 'glyphicon glyphicon-plus-sign add-new', onClick: this.addNew.bind(this) }),
+	                        _react2.default.createElement('div', { className: 'glyphicon glyphicon-minus-sign remove-new',
+	                            onClick: this.removeNew.bind(this) }),
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            'inlist'
+	                        ),
 	                        _react2.default.createElement(
 	                            'table',
 	                            { className: 'data', width: '100%' },
@@ -54941,12 +54975,7 @@
 	                                    _react2.default.createElement(
 	                                        'th',
 	                                        null,
-	                                        '\u6392\u5E8F'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u6807\u9898'
+	                                        '\u540D\u79F0'
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        'th',
@@ -54958,10 +54987,14 @@
 	                            _react2.default.createElement(
 	                                'tbody',
 	                                null,
-	                                sortsArray
+	                                sortsInArray
 	                            )
 	                        ),
-	                        _react2.default.createElement('div', { id: 'pages', className: 'page' })
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            'outlist'
+	                        )
 	                    )
 	                )
 	            );
@@ -55425,174 +55458,7 @@
 	exports.default = ArticleAdd;
 
 /***/ }),
-/* 947 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _store = __webpack_require__(264);
-
-	var _store2 = _interopRequireDefault(_store);
-
-	var _reactRouter = __webpack_require__(203);
-
-	var _constTYPE = __webpack_require__(604);
-
-	var TYPE = _interopRequireWildcard(_constTYPE);
-
-	var _customEvents = __webpack_require__(611);
-
-	var events = _interopRequireWildcard(_customEvents);
-
-	var _Header = __webpack_require__(613);
-
-	var _Header2 = _interopRequireDefault(_Header);
-
-	var _fetchJson = __webpack_require__(614);
-
-	var _fetchJson2 = _interopRequireDefault(_fetchJson);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SortAdd = function (_React$Component) {
-	    _inherits(SortAdd, _React$Component);
-
-	    function SortAdd(props) {
-	        _classCallCheck(this, SortAdd);
-
-	        var _this = _possibleConstructorReturn(this, (SortAdd.__proto__ || Object.getPrototypeOf(SortAdd)).call(this, props));
-
-	        _this.state = {
-	            sorts: []
-	        };
-	        _this.editor = null;
-	        return _this;
-	    }
-
-	    _createClass(SortAdd, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            this.init();
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {}
-	    }, {
-	        key: 'init',
-	        value: function init() {}
-	    }, {
-	        key: 'addNew',
-	        value: function () {
-	            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-	                var data, msg;
-	                return regeneratorRuntime.wrap(function _callee$(_context) {
-	                    while (1) {
-	                        switch (_context.prev = _context.next) {
-	                            case 0:
-	                                data = {
-	                                    cname: $('#title').val()
-	                                };
-	                                _context.prev = 1;
-	                                _context.next = 4;
-	                                return (0, _fetchJson2.default)({
-	                                    type: 'POST',
-	                                    url: '/json/sort/add',
-	                                    data: data
-	                                });
-
-	                            case 4:
-	                                msg = _context.sent;
-
-
-	                                if (msg.status === 'success') {
-	                                    _reactRouter.browserHistory.push('/sort/list');
-	                                }
-	                                _context.next = 10;
-	                                break;
-
-	                            case 8:
-	                                _context.prev = 8;
-	                                _context.t0 = _context['catch'](1);
-
-	                            case 10:
-	                            case 'end':
-	                                return _context.stop();
-	                        }
-	                    }
-	                }, _callee, this, [[1, 8]]);
-	            }));
-
-	            function addNew() {
-	                return _ref.apply(this, arguments);
-	            }
-
-	            return addNew;
-	        }()
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var sorts = this.state.sorts || [];
-
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(_Header2.default, null),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'container' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-xs-12 col-md-10 col-md-push-1' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'mt' },
-	                                _react2.default.createElement('input', { id: 'title', className: 'form-control', type: 'text', placeholder: '\u7C7B\u522B\u540D\u79F0' })
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'mt' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { className: 'btn btn-default', onClick: this.addNew.bind(this) },
-	                                    '\u6DFB\u52A0'
-	                                )
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return SortAdd;
-	}(_react2.default.Component);
-
-	exports.default = SortAdd;
-
-/***/ }),
+/* 947 */,
 /* 948 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -55903,7 +55769,172 @@
 	exports.default = ArticleEdit;
 
 /***/ }),
-/* 949 */
+/* 949 */,
+/* 950 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _store = __webpack_require__(264);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _reactRouter = __webpack_require__(203);
+
+	var _constTYPE = __webpack_require__(604);
+
+	var TYPE = _interopRequireWildcard(_constTYPE);
+
+	var _customEvents = __webpack_require__(611);
+
+	var events = _interopRequireWildcard(_customEvents);
+
+	var _Header = __webpack_require__(613);
+
+	var _Header2 = _interopRequireDefault(_Header);
+
+	var _fetchJson = __webpack_require__(614);
+
+	var _fetchJson2 = _interopRequireDefault(_fetchJson);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SortInAdd = function (_React$Component) {
+	    _inherits(SortInAdd, _React$Component);
+
+	    function SortInAdd(props) {
+	        _classCallCheck(this, SortInAdd);
+
+	        var _this = _possibleConstructorReturn(this, (SortInAdd.__proto__ || Object.getPrototypeOf(SortInAdd)).call(this, props));
+
+	        _this.state = {};
+	        _this.editor = null;
+	        return _this;
+	    }
+
+	    _createClass(SortInAdd, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.init();
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {}
+	    }, {
+	        key: 'init',
+	        value: function init() {}
+	    }, {
+	        key: 'addNew',
+	        value: function () {
+	            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+	                var data, msg;
+	                return regeneratorRuntime.wrap(function _callee$(_context) {
+	                    while (1) {
+	                        switch (_context.prev = _context.next) {
+	                            case 0:
+	                                data = {
+	                                    name: $('#title').val()
+	                                };
+	                                _context.prev = 1;
+	                                _context.next = 4;
+	                                return (0, _fetchJson2.default)({
+	                                    type: 'POST',
+	                                    url: '/json/sortin/add',
+	                                    data: data
+	                                });
+
+	                            case 4:
+	                                msg = _context.sent;
+
+
+	                                if (msg.status === 'success') {
+	                                    _reactRouter.browserHistory.push('/sort/list');
+	                                }
+	                                _context.next = 10;
+	                                break;
+
+	                            case 8:
+	                                _context.prev = 8;
+	                                _context.t0 = _context['catch'](1);
+
+	                            case 10:
+	                            case 'end':
+	                                return _context.stop();
+	                        }
+	                    }
+	                }, _callee, this, [[1, 8]]);
+	            }));
+
+	            function addNew() {
+	                return _ref.apply(this, arguments);
+	            }
+
+	            return addNew;
+	        }()
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(_Header2.default, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'container' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-xs-12 col-md-10 col-md-push-1' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'mt' },
+	                                _react2.default.createElement('input', { id: 'title', className: 'form-control', type: 'text', placeholder: '\u7C7B\u522B\u540D\u79F0' })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'mt' },
+	                                _react2.default.createElement(
+	                                    'button',
+	                                    { className: 'btn btn-default', onClick: this.addNew.bind(this) },
+	                                    '\u6DFB\u52A0'
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return SortInAdd;
+	}(_react2.default.Component);
+
+	exports.default = SortInAdd;
+
+/***/ }),
+/* 951 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56136,6 +56167,405 @@
 	}(_react2.default.Component);
 
 	exports.default = SortEdit;
+
+/***/ }),
+/* 952 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _store = __webpack_require__(264);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _reactRouter = __webpack_require__(203);
+
+	var _constTYPE = __webpack_require__(604);
+
+	var TYPE = _interopRequireWildcard(_constTYPE);
+
+	var _customEvents = __webpack_require__(611);
+
+	var events = _interopRequireWildcard(_customEvents);
+
+	var _Header = __webpack_require__(613);
+
+	var _Header2 = _interopRequireDefault(_Header);
+
+	var _fetchJson = __webpack_require__(614);
+
+	var _fetchJson2 = _interopRequireDefault(_fetchJson);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SortOutAdd = function (_React$Component) {
+	    _inherits(SortOutAdd, _React$Component);
+
+	    function SortOutAdd(props) {
+	        _classCallCheck(this, SortOutAdd);
+
+	        var _this = _possibleConstructorReturn(this, (SortOutAdd.__proto__ || Object.getPrototypeOf(SortOutAdd)).call(this, props));
+
+	        _this.state = {};
+	        _this.editor = null;
+	        return _this;
+	    }
+
+	    _createClass(SortOutAdd, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.init();
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {}
+	    }, {
+	        key: 'init',
+	        value: function init() {}
+	    }, {
+	        key: 'addNew',
+	        value: function () {
+	            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+	                var data, msg;
+	                return regeneratorRuntime.wrap(function _callee$(_context) {
+	                    while (1) {
+	                        switch (_context.prev = _context.next) {
+	                            case 0:
+	                                data = {
+	                                    name: $('#titleout').val()
+	                                };
+	                                _context.prev = 1;
+	                                _context.next = 4;
+	                                return (0, _fetchJson2.default)({
+	                                    type: 'POST',
+	                                    url: '/json/sortout/add',
+	                                    data: data
+	                                });
+
+	                            case 4:
+	                                msg = _context.sent;
+
+
+	                                if (msg.status === 'success') {
+	                                    _reactRouter.browserHistory.push('/sort/list');
+	                                }
+	                                _context.next = 10;
+	                                break;
+
+	                            case 8:
+	                                _context.prev = 8;
+	                                _context.t0 = _context['catch'](1);
+
+	                            case 10:
+	                            case 'end':
+	                                return _context.stop();
+	                        }
+	                    }
+	                }, _callee, this, [[1, 8]]);
+	            }));
+
+	            function addNew() {
+	                return _ref.apply(this, arguments);
+	            }
+
+	            return addNew;
+	        }()
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(_Header2.default, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'container' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-xs-12 col-md-10 col-md-push-1' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'mt' },
+	                                _react2.default.createElement('input', { id: 'titleout', className: 'form-control', type: 'text', placeholder: '\u7C7B\u522B\u540D\u79F0' })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'mt' },
+	                                _react2.default.createElement(
+	                                    'button',
+	                                    { className: 'btn btn-default', onClick: this.addNew.bind(this) },
+	                                    '\u6DFB\u52A0'
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return SortOutAdd;
+	}(_react2.default.Component);
+
+	exports.default = SortOutAdd;
+
+/***/ }),
+/* 953 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _store = __webpack_require__(264);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _reactRouter = __webpack_require__(203);
+
+	var _constTYPE = __webpack_require__(604);
+
+	var TYPE = _interopRequireWildcard(_constTYPE);
+
+	var _customEvents = __webpack_require__(611);
+
+	var events = _interopRequireWildcard(_customEvents);
+
+	var _Header = __webpack_require__(613);
+
+	var _Header2 = _interopRequireDefault(_Header);
+
+	var _fetchJson = __webpack_require__(614);
+
+	var _fetchJson2 = _interopRequireDefault(_fetchJson);
+
+	var _func = __webpack_require__(945);
+
+	var func = _interopRequireWildcard(_func);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SortOutEdit = function (_React$Component) {
+	    _inherits(SortOutEdit, _React$Component);
+
+	    function SortOutEdit(props) {
+	        _classCallCheck(this, SortOutEdit);
+
+	        var _this = _possibleConstructorReturn(this, (SortOutEdit.__proto__ || Object.getPrototypeOf(SortOutEdit)).call(this, props));
+
+	        _this.state = {
+	            sort: {}
+	        };
+	        _this.editor = null;
+	        return _this;
+	    }
+
+	    _createClass(SortOutEdit, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.init();
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {}
+	    }, {
+	        key: 'init',
+	        value: function init() {
+	            this.getData();
+	        }
+	    }, {
+	        key: 'getData',
+	        value: function () {
+	            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+	                var data, msg;
+	                return regeneratorRuntime.wrap(function _callee$(_context) {
+	                    while (1) {
+	                        switch (_context.prev = _context.next) {
+	                            case 0:
+	                                data = {
+	                                    id: func.getQueryString('id')
+	                                };
+	                                _context.prev = 1;
+	                                _context.next = 4;
+	                                return (0, _fetchJson2.default)({
+	                                    type: 'GET',
+	                                    url: '/json/sort/detail',
+	                                    data: data
+	                                });
+
+	                            case 4:
+	                                msg = _context.sent;
+
+
+	                                this.setState({
+	                                    sort: msg.data
+	                                });
+
+	                                //必须加一个延时
+	                                setTimeout(function () {
+	                                    $('#orderid').val(msg.data.orderid);
+	                                    $('#title2').val(msg.data.cname);
+	                                }, 100);
+
+	                                _context.next = 11;
+	                                break;
+
+	                            case 9:
+	                                _context.prev = 9;
+	                                _context.t0 = _context['catch'](1);
+
+	                            case 11:
+	                            case 'end':
+	                                return _context.stop();
+	                        }
+	                    }
+	                }, _callee, this, [[1, 9]]);
+	            }));
+
+	            function getData() {
+	                return _ref.apply(this, arguments);
+	            }
+
+	            return getData;
+	        }()
+	    }, {
+	        key: 'editSort',
+	        value: function () {
+	            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+	                var data, msg;
+	                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+	                    while (1) {
+	                        switch (_context2.prev = _context2.next) {
+	                            case 0:
+	                                data = {
+	                                    id: this.state.sort.id,
+	                                    orderid: $('#orderid').val(),
+	                                    cname: $('#title2').val()
+	                                };
+	                                _context2.prev = 1;
+	                                _context2.next = 4;
+	                                return (0, _fetchJson2.default)({
+	                                    type: 'POST',
+	                                    url: '/json/sort/edit',
+	                                    data: data
+	                                });
+
+	                            case 4:
+	                                msg = _context2.sent;
+
+
+	                                if (msg.status === 'success') {
+	                                    _reactRouter.browserHistory.push('/sort/list');
+	                                }
+	                                _context2.next = 10;
+	                                break;
+
+	                            case 8:
+	                                _context2.prev = 8;
+	                                _context2.t0 = _context2['catch'](1);
+
+	                            case 10:
+	                            case 'end':
+	                                return _context2.stop();
+	                        }
+	                    }
+	                }, _callee2, this, [[1, 8]]);
+	            }));
+
+	            function editSort() {
+	                return _ref2.apply(this, arguments);
+	            }
+
+	            return editSort;
+	        }()
+	    }, {
+	        key: 'render',
+	        value: function render() {
+
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(_Header2.default, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'container' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-xs-12 col-md-10 col-md-push-1' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'mt' },
+	                                _react2.default.createElement('input', { id: 'orderid', className: 'form-control', type: 'text' })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'mt' },
+	                                _react2.default.createElement('input', { id: 'title2', className: 'form-control', type: 'text', placeholder: '\u6807\u9898' })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'mt' },
+	                                _react2.default.createElement(
+	                                    'button',
+	                                    { className: 'btn btn-default', onClick: this.editSort.bind(this) },
+	                                    '\u4FEE\u6539'
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return SortOutEdit;
+	}(_react2.default.Component);
+
+	exports.default = SortOutEdit;
 
 /***/ })
 /******/ ]);

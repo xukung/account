@@ -6,12 +6,15 @@ import store from './store/';
 import Base from './components/Base';
 import ErrorPage from './components/ErrorPage';
 import ArticleLayout from './components/ArticleLayout';
-import SortLayout from './components/SortLayout';
 import ArticleDetail from './components/ArticleDetail';
 import ArticleAdd from './components/ArticleAdd';
-import SortAdd from './components/SortAdd';
 import ArticleEdit from './components/ArticleEdit';
-import SortEdit from './components/SortEdit';
+
+import SortLayout from './components/SortLayout';
+import SortInAdd from './components/SortInAdd';
+import SortOutAdd from './components/SortOutAdd';
+import SortInEdit from './components/SortInEdit';
+import SortOutEdit from './components/SortOutEdit';
 
 
 ReactDOM.render(
@@ -26,8 +29,13 @@ ReactDOM.render(
                 <Route path="/article/edit" component={ArticleEdit}/>
 
                 <Route path="/sort/list" component={SortLayout}/>
-                <Route path="/sort/add" component={SortAdd}/>
-                <Route path="/sort/edit" component={SortEdit}/>
+
+                <Route path="/sortin/add" component={SortInAdd}/>
+                <Route path="/sortin/edit" component={SortInEdit}/>
+
+                <Route path="/sortout/add" component={SortOutAdd}/>
+                <Route path="/sortout/edit" component={SortOutEdit}/>
+
             </Route>
             <Route path="/*" component={ErrorPage}/>
         </Router>

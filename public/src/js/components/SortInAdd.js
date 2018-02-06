@@ -6,12 +6,10 @@ import * as events from '../libs/customEvents';
 import Header from './Header';
 import fetchJson from '../libs/fetchJson';
 
-export default class SortAdd extends React.Component {
+export default class SortInAdd extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            sorts: [],
-        };
+        this.state = {};
         this.editor = null;
     }
 
@@ -29,12 +27,12 @@ export default class SortAdd extends React.Component {
 
     async addNew() {
         let data = {
-            cname: $('#title').val(),
+            name: $('#title').val(),
         };
         try {
             let msg = await fetchJson({
                 type: 'POST',
-                url: '/json/sort/add',
+                url: '/json/sortin/add',
                 data: data,
             });
 
@@ -47,8 +45,6 @@ export default class SortAdd extends React.Component {
     }
 
     render() {
-        let sorts = this.state.sorts || [];
-
         return (
             <div>
                 <Header/>

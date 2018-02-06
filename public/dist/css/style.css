@@ -33,7 +33,7 @@ sub { bottom: -.25em; }
 ::-webkit-scrollbar-thumb { background-color: #aaa; }
 
 /*common*/
-body { font-family: "PingFangSC-Regular", "Microsoft YaHei", STHeiti, Helvetica, Arial, sans-serif; font-size: 12px; line-height: 1.8em; background-color: #fff; color: #444; min-width: 1280px; overflow: hidden; }
+body { font-family: "PingFangSC-Regular", "Microsoft YaHei", STHeiti, Helvetica, Arial, sans-serif; font-size: 12px; line-height: 1.8em; background-color: #fff; color: #444; min-width: 1280px; }
 
 a { color: #222; text-decoration: none; -webkit-tap-highlight-color: rgba(9, 174, 255, 0.5); }
 a:hover { color: #04bee6; }
@@ -251,6 +251,8 @@ table.data td[align="right"], table.data th[align="right"] { text-align: right; 
 .breadcrumb { background: rgba(255, 255, 255, 0); }
 
 .add-new { position: fixed; left: 50px; top: 70px; cursor: pointer; font-size: 20px; }
+
+.remove-new { position: fixed; right: 50px; top: 70px; cursor: pointer; font-size: 20px; }
 
 pre { padding: 20px; }
 
